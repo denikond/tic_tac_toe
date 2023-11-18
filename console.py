@@ -94,14 +94,18 @@ def first_move():
         get_move()
 
 
-game = 1
+
 board = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
 
-print("Tic tac toe")
-first_move()
-while game:
-    draw_board()
-    player_move()
-    win_check(2)
-    get_move()
-    win_check(1)
+def main():
+    print("Tic tac toe")
+    first_move()
+    while True:
+        draw_board()
+        player_move()
+        win_check(2)
+        get_move()
+        win_check(1)
+
+if __name__ == "__main__":
+    main()
