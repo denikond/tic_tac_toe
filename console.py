@@ -2,6 +2,7 @@ import random
 
 
 def win(player):
+
     global board
 
     if player == 1:
@@ -78,14 +79,14 @@ def get_move():
 
 def draw_board():
     print("  1 2 3")
-    print(" -------")
+    print(" +-----+")
     for c, line in enumerate(board):
         p_line = chr(ord("A") + c) + "|" + "|".join(map(str, line)) + "|"
         p_line = p_line.replace("0", " ")
         p_line = p_line.replace("1", "O")
         p_line = p_line.replace("2", "X")
         print(p_line)
-        print(" -------")
+        print(" +-----+")
 
 
 def first_move():
@@ -94,7 +95,7 @@ def first_move():
         get_move()
 
 
-
+#board init (global)
 board = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
 
 def main():
