@@ -4,6 +4,7 @@ import random
 
 
 def win(player):
+    ''' Function display WIN message window, clean graphical view and gaming board, and make random first move'''
     global board
 
     if player == 1:
@@ -21,27 +22,38 @@ def win(player):
 
 
 def win_check(player):
+    ''' Function check field for win situation and return 1 if this situation appeared'''
     global board
 
     if board[0][0] == player and board[0][1] == player and board[0][2] == player:
         win(player)
+        return 1
     elif board[1][0] == player and board[1][1] == player and board[1][2] == player:
         win(player)
+        return 1
     elif board[2][0] == player and board[2][1] == player and board[2][2] == player:
         win(player)
+        return 1
     elif board[0][0] == player and board[1][0] == player and board[2][0] == player:
         win(player)
+        return 1
     elif board[0][1] == player and board[1][1] == player and board[2][1] == player:
         win(player)
+        return 1
     elif board[0][2] == player and board[1][2] == player and board[2][2] == player:
         win(player)
+        return 1
     elif board[0][0] == player and board[1][1] == player and board[2][2] == player:
         win(player)
+        return 1
     elif board[0][2] == player and board[1][1] == player and board[2][0] == player:
         win(player)
+        return 1
     elif len([i for i in (board[0] + board[1] + board[2]) if i == 0]) == 0:
         win(0)
-
+        return 1
+    else:
+        return 0
 
 def draw_zero(x, y):
     global canv
@@ -52,7 +64,7 @@ def draw_zero(x, y):
     print("zero", x, y)
     canv.create_oval(y * width_size, x * height_size + height_indent, y * width_size + width_size,
                      x * height_size + height_size + height_indent)
-    win_check(1)
+    return win_check(1)
 
 
 def draw_cross(x, y):
@@ -66,7 +78,7 @@ def draw_cross(x, y):
                      x * height_size + height_size + height_indent)
     canv.create_line(y * width_size + width_size, x * height_size + height_indent, y * width_size,
                      x * height_size + height_size + height_indent)
-    win_check(2)
+    return win_check(2)
 
 
 def b1(event):
@@ -84,8 +96,8 @@ def b1(event):
 
     if board[x][y] == 0:
         board[x][y] = 2
-        draw_cross(x, y)
-        get_move()
+        if not draw_cross(x, y): #if game not in win situation - take move
+            get_move()
 
 
 def get_move():
