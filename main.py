@@ -4,7 +4,7 @@ import random
 
 
 def win(player):
-    ''' Function display WIN message window, clean graphical view and gaming board, and make random first move'''
+    """ Function display WIN message window, clean graphical view and gaming board, and make random first move"""
     global board
 
     if player == 1:
@@ -13,7 +13,7 @@ def win(player):
         msg = "You win!"
     elif player == 0:
         msg = "Nobody win!"
-    print(msg)
+
     mb.showinfo("info", msg)
     canv.delete(ALL)
     board = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
@@ -22,7 +22,7 @@ def win(player):
 
 
 def win_check(player):
-    ''' Function check field for win situation and return 1 if this situation appeared'''
+    """ Function check field for win situation and return 1 if this situation appeared"""
     global board
 
     if board[0][0] == player and board[0][1] == player and board[0][2] == player:
@@ -56,24 +56,24 @@ def win_check(player):
         return 0
 
 def draw_zero(x, y):
+    """Draw zero function"""
     global canv
     global window_height, window_width, height_indent
 
     width_size = window_width / 3
     height_size = window_height / 3
-    print("zero", x, y)
     canv.create_oval(y * width_size, x * height_size + height_indent, y * width_size + width_size,
                      x * height_size + height_size + height_indent)
     return win_check(1)
 
 
 def draw_cross(x, y):
+    """Draw cross function"""
     global canv
     global window_height, window_width, height_indent
 
     width_size = window_width / 3
     height_size = window_height / 3
-    print("cross", x, y)
     canv.create_line(y * width_size, x * height_size + height_indent, y * width_size + width_size,
                      x * height_size + height_size + height_indent)
     canv.create_line(y * width_size + width_size, x * height_size + height_indent, y * width_size,
@@ -82,18 +82,19 @@ def draw_cross(x, y):
 
 
 def b1(event):
+    """On left mouse click on gaming window"""
     global window_height, window_width, height_indent, board
 
     width_size = window_width / 3
     height_size = window_height / 3
 
+    #Get mouse position on game window
     graph_x = event.x
     graph_y = event.y - height_indent
+    #Calculate mouse pointer to board position
     y = int(graph_x / width_size)
     x = int(graph_y / height_size)
-
-    print("Press", x, y)
-
+    #Check move for empty field
     if board[x][y] == 0:
         board[x][y] = 2
         if not draw_cross(x, y): #if game not in win situation - take move
@@ -101,11 +102,13 @@ def b1(event):
 
 
 def get_move():
+    """Make computer move"""
     global board
 
     while True:
         x = random.randint(0, 2)
         y = random.randint(0, 2)
+        # Check move for empty field
         if board[x][y] == 0:
             board[x][y] = 1
             draw_zero(x, y)
@@ -113,6 +116,7 @@ def get_move():
 
 
 def draw_field():
+    """Function draw gaming field"""
     # Draw vertical lines
     canv.create_line(window_width / 3, height_indent, window_width / 3, window_height + height_indent)
     canv.create_line(window_width / 3 * 2, + height_indent, window_width / 3 * 2, window_height + height_indent)
@@ -126,18 +130,22 @@ def draw_field():
 
 
 def first_move():
+    """Function make who start game, and if Comp - make move"""
     who_start = random.randint(0, 1)
     if who_start:
         get_move()
 
 
+#Game windows parameters
 window_width = 600
 window_height = 600
 window_xpos = 100
 window_ypos = 100
 height_indent = 30
+#init gaming voard
 board = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
 
+#Make GUI
 root = Tk()
 root.title("Tic tac toe")
 win_geo = str(window_width) + "x" + str(window_height + height_indent) + "+" + str(window_xpos) + "+" + str(window_ypos)
